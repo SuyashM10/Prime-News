@@ -238,3 +238,21 @@ darkModeToggle.addEventListener('change', () => {
     }
 });
 
+// Newsletter subscription
+const newsletterForm = document.getElementById('newsletterForm');
+const successMessage = document.getElementById('successMessage');
+
+newsletterForm.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting normally
+
+    // Show success message
+    successMessage.classList.remove('d-none');
+    
+    // Optionally, you can clear the input field after submitting
+    newsletterForm.reset();
+
+    // Hide the success message after a few seconds
+    setTimeout(() => {
+        successMessage.classList.add('d-none');
+    }, 3000);
+});
