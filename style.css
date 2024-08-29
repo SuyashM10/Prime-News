@@ -1,0 +1,68 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5;
+    color: #212121;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.5s ease;
+}
+
+.navbar-brand, .nav-link {
+    color: #212121;
+}
+
+.form-check-label {
+    color: #212121;
+}
+
+.card {
+    background-color: #ffffff;
+    color: #212121;
+    border: none;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+.card .btn {
+    background-color: #ffc107;
+    color: #000;
+}
+
+footer {
+    background-color: #ffffff;
+    color: #212121;
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.navbar.dark-mode {
+    background-color: #1f1f1f;
+}
+
+.navbar.dark-mode .navbar-brand,
+.navbar.dark-mode .nav-link {
+    color: #ffffff;
+}
+
+.form-check-label.dark-mode {
+    color: #e0e0e0;
+}
+.card.dark-mode {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+.card.dark-mode .btn {
+    background-color: #ffc107;
+    color: #000;
+}
+
+footer.dark-mode {
+    background-color: #1f1f1f;
+    color: #e0e0e0;
+}

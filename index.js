@@ -209,3 +209,32 @@ function displayNews() {
 
 }
 
+const darkModeToggle = document.getElementById('darkModeToggle');
+
+const savedMode = localStorage.getItem('mode');
+if (savedMode) {
+    document.body.classList.toggle('dark-mode', savedMode === 'dark');
+    document.querySelector('.navbar').classList.toggle('dark-mode', savedMode === 'dark');
+    document.querySelector('.form-check-label').classList.toggle('dark-mode', savedMode === 'dark');
+    document.querySelectorAll('.card').forEach(card => card.classList.toggle('dark-mode', savedMode === 'dark'));
+    document.querySelector('footer').classList.toggle('dark-mode', savedMode === 'dark');
+    darkModeToggle.checked = savedMode === 'dark';
+} else {
+    darkModeToggle.checked = false;
+}
+
+// Add event listener for the toggle switch
+darkModeToggle.addEventListener('change', () => {
+    document.body.classList.toggle('dark-mode');
+    document.querySelector('.navbar').classList.toggle('dark-mode');
+    document.querySelector('.form-check-label').classList.toggle('dark-mode');
+    document.querySelectorAll('.card').forEach(card => card.classList.toggle('dark-mode'));
+    document.querySelector('footer').classList.toggle('dark-mode');
+
+    if (document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('mode', 'dark');
+    } else {
+        localStorage.setItem('mode', 'light');
+    }
+});
+
