@@ -1,5 +1,5 @@
 // variables
-const generalBtn = document.getElementById("genral");
+const generalBtn = document.getElementById("general");
 const businessBtn = document.getElementById("business");
 const sportsBtn = document.getElementById("sport");
 const entertainmentBtn = document.getElementById("entertainment");
@@ -27,7 +27,6 @@ window.onload = function() {
     newsType.innerHTML="<h4>Headlines</h4>";
     fetchHeadlines();
 };
-
 
 generalBtn.addEventListener("click",function(){
     newsType.innerHTML="<h4>General news</h4>";
@@ -59,144 +58,113 @@ searchBtn.addEventListener("click",function(){
     fetchQueryNews();
 });
 
-const fetchHeadlines = async () => {
-    const response = await fetch(HEADLINES_NEWS+API_KEY);
-    newsDataArr = [];
-    if(response.status >=200 && response.status < 300) {
-        const myJson = await response.json();
-        newsDataArr = myJson.articles;
-    } else {
-        console.log(response.status, response.statusText);
-        newsdetails.innerHTML = "<h5>No data found.</h5>"
-        return;
-    }
-
-    displayNews();
+function fetchHeadlines(){
+    fetch(HEADLINES_NEWS+API_KEY)
+    .then(response => response.json())
+    .then(data => {
+        newsDataArr = data.articles;
+        displayNews();
+    })
+    .catch(error => console.log(error));
 }
 
-
-const fetchGeneralNews = async () => {
-    const response = await fetch(GENERAL_NEWS+API_KEY);
-    newsDataArr = [];
-    if(response.status >=200 && response.status < 300) {
-        const myJson = await response.json();
-        newsDataArr = myJson.articles;
-    } else {
-        console.log(response.status, response.statusText);
-        newsdetails.innerHTML = "<h5>No data found.</h5>"
-        return;
-    }
-
-    displayNews();
+function fetchGeneralNews(){
+    fetch(GENERAL_NEWS+API_KEY)
+    .then(response => response.json())
+    .then(data => {
+        newsDataArr = data.articles;
+        displayNews();
+    })
+    .catch(error => console.log(error));
 }
 
-const fetchBusinessNews = async () => {
-    const response = await fetch(BUSINESS_NEWS+API_KEY);
-    newsDataArr = [];
-    if(response.status >=200 && response.status < 300) {
-        const myJson = await response.json();
-        newsDataArr = myJson.articles;
-    } else {
-        console.log(response.status, response.statusText);
-        newsdetails.innerHTML = "<h5>No data found.</h5>"
-        return;
-    }
-
-    displayNews();
+function fetchBusinessNews(){
+    fetch(BUSINESS_NEWS+API_KEY)
+    .then(response => response.json())
+    .then(data => {
+        newsDataArr = data.articles;
+        displayNews();
+    })
+    .catch(error => console.log(error));
 }
 
-const fetchEntertainmentNews = async () => {
-    const response = await fetch(ENTERTAINMENT_NEWS+API_KEY);
-    newsDataArr = [];
-    if(response.status >=200 && response.status < 300) {
-        const myJson = await response.json();
-        console.log(myJson);
-        newsDataArr = myJson.articles;
-    } else {
-        console.log(response.status, response.statusText);
-        newsdetails.innerHTML = "<h5>No data found.</h5>"
-        return;
-    }
-
-    displayNews();
+function fetchSportsNews(){
+    fetch(SPORTS_NEWS+API_KEY)
+    .then(response => response.json())
+    .then(data => {
+        newsDataArr = data.articles;
+        displayNews();
+    })
+    .catch(error => console.log(error));
 }
 
-const fetchSportsNews = async () => {
-    const response = await fetch(SPORTS_NEWS+API_KEY);
-    newsDataArr = [];
-    if(response.status >=200 && response.status < 300) {
-        const myJson = await response.json();
-        newsDataArr = myJson.articles;
-    } else {
-        console.log(response.status, response.statusText);
-        newsdetails.innerHTML = "<h5>No data found.</h5>"
-        return;
-    }
-
-    displayNews();
+function fetchEntertainmentNews(){
+    fetch(ENTERTAINMENT_NEWS+API_KEY)
+    .then(response => response.json())
+    .then(data => {
+        newsDataArr = data.articles;
+        displayNews();
+    })
+    .catch(error => console.log(error));
 }
 
-const fetchTechnologyNews = async () => {
-    const response = await fetch(TECHNOLOGY_NEWS+API_KEY);
-    newsDataArr = [];
-    if(response.status >=200 && response.status < 300) {
-        const myJson = await response.json();
-        newsDataArr = myJson.articles;
-    } else {
-        console.log(response.status, response.statusText);
-        newsdetails.innerHTML = "<h5>No data found.</h5>"
-        return;
-    }
-
-    displayNews();
+function fetchTechnologyNews(){
+    fetch(TECHNOLOGY_NEWS+API_KEY)
+    .then(response => response.json())
+    .then(data => {
+        newsDataArr = data.articles;
+        displayNews();
+    })
+    .catch(error => console.log(error));
 }
 
+function fetchQueryNews(){
+    if(newsQuery.value.length==0) return;
+    fetch(SEARCH_NEWS+encodeURIComponent(newsQuery.value)+"&apiKey="+API_KEY)
+    .then(response => response.json())
+    .then(data => {
+        newsDataArr = data.articles;
+        displayNews();
+    })
+    .catch(error => console.log(error));
+}
 
 function displayNews() {
     newsdetails.innerHTML = "";
-    // if(newsDataArr.length == 0) {
-    //     newsdetails.innerHTML = "<h5>No data found.</h5>"
-    //     return;
-    // }
-
     newsDataArr.forEach(news => {
-
-        var date = news.publishedAt.split("T");
-        
-        var col = document.createElement('div');
-        col.className="col-sm-12 col-md-4 col-lg-3 p-2 card";
-
-        var card = document.createElement('div');
+        let col = document.createElement('div');
+        col.className = 'col-sm-12 col-md-4 col-lg-3 p-2 card';
+        let card = document.createElement('div');
         card.className = "p-2";
 
-        var image = document.createElement('img');
-        image.setAttribute("height","matchparent");
-        image.setAttribute("width","100%");
-        image.src=news.urlToImage;
+        let image = document.createElement('img');
+        image.setAttribute("height", "matchparent");
+        image.setAttribute("width", "100%");
+        image.src = news.urlToImage || "default-news-image.jpg"; // Placeholder for missing images
 
-        var cardBody = document.createElement('div');
-        
-        var newsHeading = document.createElement('h5');
+        let cardBody = document.createElement('div');
+
+        let newsHeading = document.createElement('h5');
         newsHeading.className = "card-title";
         newsHeading.innerHTML = news.title;
 
-        var dateHeading = document.createElement('h6');
+        let dateHeading = document.createElement('h6');
         dateHeading.className = "text-primary";
-        dateHeading.innerHTML = date[0];
+        dateHeading.innerHTML = news.publishedAt.split("T")[0];
 
-        var discription = document.createElement('p');
-        discription.className="text-muted";
-        discription.innerHTML = news.description;
+        let description = document.createElement('p');
+        description.className = "text-muted";
+        description.innerHTML = news.description;
 
-        var link = document.createElement('a');
-        link.className="btn btn-dark";
+        let link = document.createElement('a');
+        link.className = "btn btn-warning";
         link.setAttribute("target", "_blank");
         link.href = news.url;
-        link.innerHTML="Read more";
+        link.innerHTML = "Read more";
 
         cardBody.appendChild(newsHeading);
         cardBody.appendChild(dateHeading);
-        cardBody.appendChild(discription);
+        cardBody.appendChild(description);
         cardBody.appendChild(link);
 
         card.appendChild(image);
@@ -206,35 +174,28 @@ function displayNews() {
 
         newsdetails.appendChild(col);
     });
-
 }
 
-const darkModeToggle = document.getElementById('darkModeToggle');
-
-const savedMode = localStorage.getItem('mode');
-if (savedMode) {
-    document.body.classList.toggle('dark-mode', savedMode === 'dark');
-    document.querySelector('.navbar').classList.toggle('dark-mode', savedMode === 'dark');
-    document.querySelector('.form-check-label').classList.toggle('dark-mode', savedMode === 'dark');
-    document.querySelectorAll('.card').forEach(card => card.classList.toggle('dark-mode', savedMode === 'dark'));
-    document.querySelector('footer').classList.toggle('dark-mode', savedMode === 'dark');
-    darkModeToggle.checked = savedMode === 'dark';
-} else {
-    darkModeToggle.checked = false;
-}
-
-// Add event listener for the toggle switch
-darkModeToggle.addEventListener('change', () => {
-    document.body.classList.toggle('dark-mode');
-    document.querySelector('.navbar').classList.toggle('dark-mode');
-    document.querySelector('.form-check-label').classList.toggle('dark-mode');
-    document.querySelectorAll('.card').forEach(card => card.classList.toggle('dark-mode'));
-    document.querySelector('footer').classList.toggle('dark-mode');
-
-    if (document.body.classList.contains('dark-mode')) {
-        localStorage.setItem('mode', 'dark');
-    } else {
-        localStorage.setItem('mode', 'light');
-    }
+// Dark mode toggle
+const darkModeToggle = document.getElementById("darkModeToggle");
+darkModeToggle.addEventListener("change", () => {
+    document.body.classList.toggle("dark-mode");
+    document.querySelector('.navbar').classList.toggle("dark-mode");
+    document.querySelectorAll('.card').forEach(card => {
+        card.classList.toggle("dark-mode");
+    });
+    document.querySelector('footer').classList.toggle("dark-mode");
 });
+
+// Handle newsletter form submission
+const newsletterForm = document.getElementById("newsletterForm");
+newsletterForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const email = document.getElementById("subscriberEmail").value;
+    if (email) {
+        document.getElementById("successMessage").classList.remove("d-none");
+        newsletterForm.reset();
+    }
+});
+
 
