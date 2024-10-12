@@ -238,3 +238,15 @@ darkModeToggle.addEventListener('change', () => {
     }
 });
 
+
+// Handle newsletter form submission
+const newsletterForm = document.getElementById("newsletterForm");
+newsletterForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+    const email = document.getElementById("subscriberEmail").value;
+    if (email) {
+        document.getElementById("successMessage").classList.remove("d-none");
+        newsletterForm.reset();
+    }
+});
+
