@@ -238,6 +238,7 @@ darkModeToggle.addEventListener('change', () => {
     }
 });
 
+
 // Handle newsletter form submission
 const newsletterForm = document.getElementById("newsletterForm");
 newsletterForm.addEventListener("submit", function(e) {
@@ -248,3 +249,4 @@ newsletterForm.addEventListener("submit", function(e) {
         newsletterForm.reset();
     }
 });
+
